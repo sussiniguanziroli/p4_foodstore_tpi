@@ -6,7 +6,7 @@
 | | |
 |---|---|
 | 🔗 **Repositorio** | https://github.com/sussiniguanziroli/p4_foodstore_tpi 
-| 🎥 **Video de demostración** | https://LINK-DEL-VIDEO <!-- REEMPLAZAR por el link público (YouTube, Drive, etc.) --> |
+| 🎥 **Video de demostración** | https://www.youtube.com/watch?v=z0Gi_RtN4uM
 
 Aplicación web completa para un negocio de comidas. Los clientes se registran, recorren el catálogo, arman un
 carrito y confirman pedidos con dirección de entrega y forma de pago (efectivo o transferencia). El administrador

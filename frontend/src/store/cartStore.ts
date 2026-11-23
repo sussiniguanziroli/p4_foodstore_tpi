@@ -7,6 +7,8 @@ export interface CartItem {
   nombre: string
   precio_unitario: number
   cantidad: number
+  /** Stock del producto al agregarlo: el carrito no deja pedir más que esto (el backend igual lo valida). */
+  stock: number
 }
 
 interface CartState {
@@ -23,18 +25,22 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
 
-      // Si el producto ya está en el carrito, suma la cantidad (así no se repite: RN-01)
+      // Si el producto ya está en el carrito, suma la cantidad (así no se repite: RN-01).
+      // Nunca supera el stock: se actualiza con el stock más reciente que mostró el catálogo.
       agregar: (item, cantidad = 1) =>
         set((state) => {
+          if (item.stock < 1) return state
           const existente = state.items.find((i) => i.producto_id === item.producto_id)
           if (existente) {
             return {
               items: state.items.map((i) =>
-                i.producto_id === item.producto_id ? { ...i, cantidad: i.cantidad + cantidad } : i,
+                i.producto_id === item.producto_id
+                  ? { ...i, ...item, cantidad: Math.min(i.cantidad + cantidad, item.stock) }
+                  : i,
               ),
             }
           }
-          return { items: [...state.items, { ...item, cantidad }] }
+          return { items: [...state.items, { ...item, cantidad: Math.min(cantidad, item.stock) }] }
         }),
 
       quitar: (producto_id) => set((state) => ({ items: state.items.filter((i) => i.producto_id !== producto_id) })),
@@ -45,7 +51,9 @@ export const useCartStore = create<CartState>()(
           items:
             cantidad < 1
               ? state.items.filter((i) => i.producto_id !== producto_id)
-              : state.items.map((i) => (i.producto_id === producto_id ? { ...i, cantidad } : i)),
+              : state.items.map((i) =>
+                  i.producto_id === producto_id ? { ...i, cantidad: Math.min(cantidad, i.stock ?? cantidad) } : i,
+                ),
         })),
 
       vaciar: () => set({ items: [] }),

@@ -51,7 +51,12 @@ export function ProductoCard({ producto }: Props) {
           className="mt-3 w-full"
           disabled={!sePuedeVender || alcanzoElStock}
           onClick={() =>
-            agregar({ producto_id: producto.id, nombre: producto.nombre, precio_unitario: producto.precio_base })
+            agregar({
+              producto_id: producto.id,
+              nombre: producto.nombre,
+              precio_unitario: producto.precio_base,
+              stock: producto.stock,
+            })
           }
         >
           {etiqueta}

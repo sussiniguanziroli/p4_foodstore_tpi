@@ -5,12 +5,17 @@ import { useCartStore, type CartItem } from '@/store/cartStore'
 export function CarritoItem({ item }: { item: CartItem }) {
   const cambiarCantidad = useCartStore((s) => s.cambiarCantidad)
   const quitar = useCartStore((s) => s.quitar)
+  // El + se deshabilita al llegar al stock disponible
+  const enElMaximo = item.stock !== undefined && item.cantidad >= item.stock
 
   return (
     <li className="flex flex-wrap items-center gap-4 py-4">
       <div className="min-w-40 flex-1">
         <p className="font-semibold text-stone-900">{item.nombre}</p>
-        <p className="text-sm text-stone-500">{formatPrecio(item.precio_unitario)} c/u</p>
+        <p className="text-sm text-stone-500">
+          {formatPrecio(item.precio_unitario)} c/u
+          {item.stock !== undefined && <span className="ml-2 text-xs text-stone-400">· Disponibles: {item.stock}</span>}
+        </p>
       </div>
 
       <div className="flex items-center rounded-lg border border-stone-300" role="group" aria-label={`Cantidad de ${item.nombre}`}>
@@ -28,7 +33,9 @@ export function CarritoItem({ item }: { item: CartItem }) {
         <button
           type="button"
           onClick={() => cambiarCantidad(item.producto_id, item.cantidad + 1)}
-          className="px-3 py-1.5 text-lg leading-none text-stone-600 hover:bg-stone-100"
+          disabled={enElMaximo}
+          title={enElMaximo ? 'No hay más stock disponible' : undefined}
+          className="px-3 py-1.5 text-lg leading-none text-stone-600 hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
           aria-label="Sumar uno"
         >
           +

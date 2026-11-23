@@ -5,7 +5,7 @@
 
 | | |
 |---|---|
-| 🔗 **Repositorio** | https://github.com/USUARIO/REPOSITORIO <!-- REEMPLAZAR por la URL pública del repositorio --> |
+| 🔗 **Repositorio** | https://github.com/sussiniguanziroli/p4_foodstore_tpi 
 | 🎥 **Video de demostración** | https://LINK-DEL-VIDEO <!-- REEMPLAZAR por el link público (YouTube, Drive, etc.) --> |
 
 Aplicación web completa para un negocio de comidas. Los clientes se registran, recorren el catálogo, arman un

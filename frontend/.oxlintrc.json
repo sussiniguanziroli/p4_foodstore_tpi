@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "react",
+    "typescript"
+  ],
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "react/jsx-key": "error",
+    "react/incompatible-library": "off"
+  },
+  "ignorePatterns": [
+    "dist",
+    "node_modules"
+  ]
+}
